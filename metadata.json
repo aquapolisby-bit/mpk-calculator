@@ -1,0 +1,6 @@
+{
+  "name": "Калькулятор террасной доски мпк.бел",
+  "description": "Интерактивный калькулятор для точного расчёта террасной доски, лаг, крепежа и комплектующих для сайта мпк.бел.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
