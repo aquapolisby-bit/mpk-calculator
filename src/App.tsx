@@ -31,7 +31,7 @@ export default function App() {
 
   const [showOffer, setShowOffer] = React.useState(false);
 
-  // Close calculator logic (try iframe postMessage, try window.close, and fallback to redirect)
+  // Close calculator logic (try iframe postMessage, try window.close)
   const handleClose = () => {
     try {
       window.parent.postMessage({ action: 'close_calculator' }, '*');
@@ -43,8 +43,6 @@ export default function App() {
     } catch (e) {
       console.error('Failed to call window.close():', e);
     }
-    // Redirect back to official website as fallback/direct close action
-    window.location.href = 'https://мпк.бел';
   };
 
   // Sync custom drawing grid with selected shape and dimensions
@@ -86,15 +84,21 @@ export default function App() {
       {/* 1. Header (мпк.бел Brand representation) */}
       <header className="bg-slate-900 text-white border-b border-slate-800 sticky top-0 z-40 shadow-sm print:hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div className="bg-brand text-white font-extrabold text-sm sm:text-base px-3 py-1.5 rounded-xl tracking-wider shadow-sm shadow-brand/20">
+          <a
+            href="https://xn--j1adj.xn--90ais/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-3 group hover:opacity-95 transition-opacity"
+            title="Перейти на сайт мпк.бел"
+          >
+            <div className="bg-brand text-white font-extrabold text-sm sm:text-base px-3 py-1.5 rounded-xl tracking-wider shadow-sm shadow-brand/20 group-hover:scale-[1.03] transition-transform">
               МПК
             </div>
             <div>
-              <div className="font-extrabold text-base sm:text-lg tracking-tight leading-none">мпк.бел</div>
+              <div className="font-extrabold text-base sm:text-lg tracking-tight leading-none group-hover:text-brand transition-colors">мпк.бел</div>
               <div className="text-[10px] text-slate-400 mt-0.5">Террасная доска и комплектующие</div>
             </div>
-          </div>
+          </a>
 
           <div className="flex flex-wrap items-center gap-3 text-xs text-slate-300">
             <div className="hidden lg:flex items-center gap-2">
