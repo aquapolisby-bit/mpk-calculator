@@ -19,29 +19,27 @@ export const DeckVisualizer: React.FC<DeckVisualizerProps> = ({ config, results 
   const boardSpec = BOARD_SPECS[config.boardType];
 
   // We want to scale our layout to fit the screen container
-  // Keep an aspect ratio based on config.width and config.length
+  // Keep an aspect ratio based on physical length and width of the terrace
   // Ensure we add some padding around the SVG for dimension labels
   const svgWidth = 800;
   
-  // Calculate height dynamically maintaining the aspect ratio
-  // Standard ratio: width / height = config.width / config.length (or vice versa depending on orientation)
   const isAlongLength = config.direction === LayoutDirection.ALONG_LENGTH;
   
-  // Determine coordinate mapping:
-  // We'll map the boardDirectionSpan (parallel to boards) to the SVG's long axis (X)
-  // We'll map the acrossDirectionSpan (perpendicular to boards) to the SVG's cross axis (Y)
-  const totalBoardSpan = isAlongLength ? config.length : config.width;
-  const totalAcrossSpan = isAlongLength ? config.width : config.length;
+  // Determine physical coordinates (independent of board layout direction)
+  // Length is always along the X-axis of the screen/SVG
+  // Width is always along the Y-axis of the screen/SVG
+  const physicalLength = config.length;
+  const physicalWidth = config.width;
 
-  const unitScale = Math.max(1.2, totalBoardSpan / 700);
+  const unitScale = Math.max(1.2, physicalLength / 700);
   const padding = 75 * unitScale;
 
-  const aspect = totalAcrossSpan / totalBoardSpan;
+  const aspect = physicalWidth / physicalLength;
   const svgHeight = Math.max(200, Math.min(600, Math.round(svgWidth * aspect)));
 
-  // ViewBox coordinates
-  const viewWidth = totalBoardSpan + padding * 2;
-  const viewHeight = totalAcrossSpan + padding * 2;
+  // ViewBox coordinates (always matching physical dimensions of the terrace)
+  const viewWidth = physicalLength + padding * 2;
+  const viewHeight = physicalWidth + padding * 2;
 
   // Render variables
   const wallGap = results.wallGap;
@@ -82,7 +80,7 @@ export const DeckVisualizer: React.FC<DeckVisualizerProps> = ({ config, results 
               row.map((active, cIdx) => {
                 if (!active) return null;
                 const CELL_SIZE = config.cellSize || 500;
-                // Scale cells down to fit totalBoardSpan and totalAcrossSpan correctly
+                // Scale cells down to fit physicalLength and physicalWidth correctly
                 // Each cell is 500x500mm
                 return (
                   <rect
@@ -100,15 +98,15 @@ export const DeckVisualizer: React.FC<DeckVisualizerProps> = ({ config, results 
               })
             )
           ) : config.shape === 'L_SHAPE' ? (
-            // Render L-shape polygon background
+            // Render L-shape polygon background at bottom-right corner
             <polygon
               points={`
                 ${padding},${padding}
-                ${padding + totalBoardSpan},${padding}
-                ${padding + totalBoardSpan},${padding + totalAcrossSpan - (config.cutoutWidth || 1500)}
-                ${padding + totalBoardSpan - (config.cutoutLength || 1500)},${padding + totalAcrossSpan - (config.cutoutWidth || 1500)}
-                ${padding + totalBoardSpan - (config.cutoutLength || 1500)},${padding + totalAcrossSpan}
-                ${padding},${padding + totalAcrossSpan}
+                ${padding + config.length},${padding}
+                ${padding + config.length},${padding + config.width - (config.cutoutWidth || 1500)}
+                ${padding + config.length - (config.cutoutLength || 1500)},${padding + config.width - (config.cutoutWidth || 1500)}
+                ${padding + config.length - (config.cutoutLength || 1500)},${padding + config.width}
+                ${padding},${padding + config.width}
               `}
               fill="#F8FAFC"
               stroke="#E2E8F0"
@@ -116,15 +114,15 @@ export const DeckVisualizer: React.FC<DeckVisualizerProps> = ({ config, results 
               strokeDasharray="4 4"
             />
           ) : config.shape === 'CUTOUT' ? (
-            // Render Cutout polygon background
+            // Render Cutout polygon background at top-right corner
             <polygon
               points={`
                 ${padding},${padding}
-                ${padding + totalBoardSpan - (config.cutoutLength || 1500)},${padding}
-                ${padding + totalBoardSpan - (config.cutoutLength || 1500)},${padding + (config.cutoutWidth || 1500)}
-                ${padding + totalBoardSpan},${padding + (config.cutoutWidth || 1500)}
-                ${padding + totalBoardSpan},${padding + totalAcrossSpan}
-                ${padding},${padding + totalAcrossSpan}
+                ${padding + config.length - (config.cutoutLength || 1500)},${padding}
+                ${padding + config.length - (config.cutoutLength || 1500)},${padding + (config.cutoutWidth || 1500)}
+                ${padding + config.length},${padding + (config.cutoutWidth || 1500)}
+                ${padding + config.length},${padding + config.width}
+                ${padding},${padding + config.width}
               `}
               fill="#F8FAFC"
               stroke="#E2E8F0"
@@ -136,8 +134,8 @@ export const DeckVisualizer: React.FC<DeckVisualizerProps> = ({ config, results 
             <rect
               x={padding}
               y={padding}
-              width={totalBoardSpan}
-              height={totalAcrossSpan}
+              width={config.length}
+              height={config.width}
               fill="#F8FAFC"
               stroke="#E2E8F0"
               strokeWidth="2"
@@ -148,41 +146,72 @@ export const DeckVisualizer: React.FC<DeckVisualizerProps> = ({ config, results 
 
           {/* Lags layer (drawn underneath the boards) */}
           {results.lags.map((lag) => {
-            const xPos = padding + lag.position;
-            const startY = padding + (lag.startCoord || 0);
-            const endY = startY + lag.length;
             return (
               <g key={lag.id}>
-                {lag.isDouble ? (
-                  <>
-                    {/* Two parallel lags at joints */}
+                {isAlongLength ? (
+                  // Vertical lags
+                  lag.isDouble ? (
+                    <>
+                      <line
+                        x1={padding + lag.position - 8}
+                        y1={padding + (lag.startCoord || 0)}
+                        x2={padding + lag.position - 8}
+                        y2={padding + (lag.startCoord || 0) + lag.length}
+                        stroke="#94A3B8"
+                        strokeWidth="3"
+                      />
+                      <line
+                        x1={padding + lag.position + 8}
+                        y1={padding + (lag.startCoord || 0)}
+                        x2={padding + lag.position + 8}
+                        y2={padding + (lag.startCoord || 0) + lag.length}
+                        stroke="#94A3B8"
+                        strokeWidth="3"
+                      />
+                    </>
+                  ) : (
                     <line
-                      x1={xPos - 8}
-                      y1={startY}
-                      x2={xPos - 8}
-                      y2={endY}
-                      stroke="#94A3B8"
-                      strokeWidth="3"
+                      x1={padding + lag.position}
+                      y1={padding + (lag.startCoord || 0)}
+                      x2={padding + lag.position}
+                      y2={padding + (lag.startCoord || 0) + lag.length}
+                      stroke="#CBD5E1"
+                      strokeWidth="4"
+                      strokeLinecap="round"
                     />
-                    <line
-                      x1={xPos + 8}
-                      y1={startY}
-                      x2={xPos + 8}
-                      y2={endY}
-                      stroke="#94A3B8"
-                      strokeWidth="3"
-                    />
-                  </>
+                  )
                 ) : (
-                  <line
-                    x1={xPos}
-                    y1={startY}
-                    x2={xPos}
-                    y2={endY}
-                    stroke="#CBD5E1"
-                    strokeWidth="4"
-                    strokeLinecap="round"
-                  />
+                  // Horizontal lags
+                  lag.isDouble ? (
+                    <>
+                      <line
+                        x1={padding + (lag.startCoord || 0)}
+                        y1={padding + lag.position - 8}
+                        x2={padding + (lag.startCoord || 0) + lag.length}
+                        y2={padding + lag.position - 8}
+                        stroke="#94A3B8"
+                        strokeWidth="3"
+                      />
+                      <line
+                        x1={padding + (lag.startCoord || 0)}
+                        y1={padding + lag.position + 8}
+                        x2={padding + (lag.startCoord || 0) + lag.length}
+                        y2={padding + lag.position + 8}
+                        stroke="#94A3B8"
+                        strokeWidth="3"
+                      />
+                    </>
+                  ) : (
+                    <line
+                      x1={padding + (lag.startCoord || 0)}
+                      y1={padding + lag.position}
+                      x2={padding + (lag.startCoord || 0) + lag.length}
+                      y2={padding + lag.position}
+                      stroke="#CBD5E1"
+                      strokeWidth="4"
+                      strokeLinecap="round"
+                    />
+                  )
                 )}
               </g>
             );
@@ -190,20 +219,35 @@ export const DeckVisualizer: React.FC<DeckVisualizerProps> = ({ config, results 
 
           {/* Board rows layer */}
           {results.rows.map((row) => {
-            const yPos = padding + row.yPosition;
             return (
               <g key={`row-${row.rowIdx}`}>
                 {row.pieces.map((piece) => {
-                  const xPos = padding + wallGap + piece.startX;
                   const isSelected = selectedPiece?.id === piece.id;
+
+                  // Coordinate calculation depending on direction
+                  const xPos = isAlongLength 
+                    ? padding + wallGap + piece.startX 
+                    : padding + row.yPosition;
+                  
+                  const yPos = isAlongLength 
+                    ? padding + row.yPosition 
+                    : padding + wallGap + piece.startX;
+                  
+                  const rectWidth = isAlongLength 
+                    ? piece.length 
+                    : boardSpec.width;
+                  
+                  const rectHeight = isAlongLength 
+                    ? boardSpec.width 
+                    : piece.length;
 
                   return (
                     <rect
                       key={piece.id}
                       x={xPos}
                       y={yPos}
-                      width={piece.length}
-                      height={boardSpec.width}
+                      width={rectWidth}
+                      height={rectHeight}
                       fill={colorSpec.hex}
                       stroke={isSelected ? '#10B981' : '#1E293B'}
                       strokeWidth={isSelected ? '2.5' : '0.5'}
@@ -225,7 +269,7 @@ export const DeckVisualizer: React.FC<DeckVisualizerProps> = ({ config, results 
             <line
               x1={padding}
               y1={padding - 20 * unitScale}
-              x2={padding + totalBoardSpan}
+              x2={padding + physicalLength}
               y2={padding - 20 * unitScale}
               stroke="#64748B"
               strokeWidth={1.5 * unitScale}
@@ -233,13 +277,13 @@ export const DeckVisualizer: React.FC<DeckVisualizerProps> = ({ config, results 
               markerStart="url(#arrow-start)"
             />
             <text
-              x={padding + totalBoardSpan / 2}
+              x={padding + physicalLength / 2}
               y={padding - 27 * unitScale}
               textAnchor="middle"
               className="font-bold fill-slate-600 font-mono"
               fontSize={11 * unitScale}
             >
-              {isAlongLength ? `Длина L: ${(config.length / 1000).toFixed(2)} м` : `Ширина W: ${(config.width / 1000).toFixed(2)} м`}
+              Длина L: {(config.length / 1000).toFixed(2)} м
             </text>
           </g>
 
@@ -249,7 +293,7 @@ export const DeckVisualizer: React.FC<DeckVisualizerProps> = ({ config, results 
               x1={padding - 20 * unitScale}
               y1={padding}
               x2={padding - 20 * unitScale}
-              y2={padding + totalAcrossSpan}
+              y2={padding + physicalWidth}
               stroke="#64748B"
               strokeWidth={1.5 * unitScale}
               markerEnd="url(#arrow-end)"
@@ -257,41 +301,41 @@ export const DeckVisualizer: React.FC<DeckVisualizerProps> = ({ config, results 
             />
             <text
               x={padding - 27 * unitScale}
-              y={padding + totalAcrossSpan / 2}
+              y={padding + physicalWidth / 2}
               textAnchor="middle"
-              transform={`rotate(-90, ${padding - 27 * unitScale}, ${padding + totalAcrossSpan / 2})`}
+              transform={`rotate(-90, ${padding - 27 * unitScale}, ${padding + physicalWidth / 2})`}
               className="font-bold fill-slate-600 font-mono"
               fontSize={11 * unitScale}
             >
-              {isAlongLength ? `Ширина W: ${(config.width / 1000).toFixed(2)} м` : `Длина L: ${(config.length / 1000).toFixed(2)} м`}
+              Ширина W: {(config.width / 1000).toFixed(2)} м
             </text>
           </g>
 
           {/* Side direction labels with letter markers (А, Б, В, Г) */}
           <g className="select-none">
             {/* FRONT (BOTTOM) SIDE - А */}
-            <g transform={`translate(${padding + totalBoardSpan / 2}, ${padding + totalAcrossSpan + 45 * unitScale})`}>
+            <g transform={`translate(${padding + physicalLength / 2}, ${padding + physicalWidth + 45 * unitScale})`}>
               <circle r={12 * unitScale} fill="#10B981" />
               <text y={4 * unitScale} textAnchor="middle" fill="#ffffff" className="font-extrabold font-sans" fontSize={12 * unitScale}>А</text>
               <text y={24 * unitScale} textAnchor="middle" fill="#334155" className="font-bold font-sans" fontSize={9 * unitScale}>Передняя сторона (А)</text>
             </g>
 
             {/* LEFT SIDE - Б */}
-            <g transform={`translate(${padding - 45 * unitScale}, ${padding + totalAcrossSpan / 2}) rotate(-90)`}>
+            <g transform={`translate(${padding - 45 * unitScale}, ${padding + physicalWidth / 2}) rotate(-90)`}>
               <circle r={12 * unitScale} fill="#10B981" />
               <text y={4 * unitScale} textAnchor="middle" fill="#ffffff" className="font-extrabold font-sans" fontSize={12 * unitScale}>Б</text>
               <text y={24 * unitScale} textAnchor="middle" fill="#334155" className="font-bold font-sans" fontSize={9 * unitScale}>Левая сторона (Б)</text>
             </g>
 
             {/* BACK (TOP) SIDE - В */}
-            <g transform={`translate(${padding + totalBoardSpan / 2}, ${padding - 45 * unitScale})`}>
+            <g transform={`translate(${padding + physicalLength / 2}, ${padding - 45 * unitScale})`}>
               <circle r={12 * unitScale} fill="#10B981" />
               <text y={4 * unitScale} textAnchor="middle" fill="#ffffff" className="font-extrabold font-sans" fontSize={12 * unitScale}>В</text>
               <text y={-16 * unitScale} textAnchor="middle" fill="#334155" className="font-bold font-sans" fontSize={9 * unitScale}>Задняя сторона (В)</text>
             </g>
 
             {/* RIGHT SIDE - Г */}
-            <g transform={`translate(${padding + totalBoardSpan + 45 * unitScale}, ${padding + totalAcrossSpan / 2}) rotate(90)`}>
+            <g transform={`translate(${padding + physicalLength + 45 * unitScale}, ${padding + physicalWidth / 2}) rotate(90)`}>
               <circle r={12 * unitScale} fill="#10B981" />
               <text y={4 * unitScale} textAnchor="middle" fill="#ffffff" className="font-extrabold font-sans" fontSize={12 * unitScale}>Г</text>
               <text y={24 * unitScale} textAnchor="middle" fill="#334155" className="font-bold font-sans" fontSize={9 * unitScale}>Правая сторона (Г)</text>
@@ -325,8 +369,10 @@ export const DeckVisualizer: React.FC<DeckVisualizerProps> = ({ config, results 
             <div className="grid grid-cols-2 gap-2 text-slate-300">
               <span>Индекс ряда:</span>
               <span className="font-semibold text-white">{selectedPiece.rowIdx + 1}</span>
-              <span>Координата X:</span>
+              <span>{isAlongLength ? 'Координата X (Длина):' : 'Координата Y (Ширина):'}</span>
               <span className="font-semibold text-white">{selectedPiece.startX.toLocaleString()} мм</span>
+              <span>{isAlongLength ? 'Координата Y (Ширина):' : 'Координата X (Длина):'}</span>
+              <span className="font-semibold text-white">{(results.rows[selectedPiece.rowIdx]?.yPosition || 0).toLocaleString()} мм</span>
               <span>Длина отрезка:</span>
               <span className="font-bold text-brand font-mono">{(selectedPiece.length / 1000).toFixed(3)} м ({selectedPiece.length} мм)</span>
               <span>Тип детали:</span>

@@ -577,7 +577,8 @@ export function calculateDeck(config: DeckConfig): CalculationResults {
   const lagsCount = Math.ceil(totalLagLengthMm / 3000);
 
   // 7. Clips / Fasteners Calculation
-  const starterClipsCount = lags.length * 2;
+  // Starter clips reduced by 2 times (in half) as requested
+  const starterClipsCount = Math.ceil(lags.length);
   
   let standardClipsCount = 0;
   rows.forEach((row) => {
@@ -601,6 +602,9 @@ export function calculateDeck(config: DeckConfig): CalculationResults {
 
   const rawClipsCount = Math.ceil(rowCount * lags.length * 1.1);
   standardClipsCount = Math.max(standardClipsCount, rawClipsCount);
+
+  // Reduce intermediate/row clips (межрядные клипсы) by 4% as requested
+  standardClipsCount = Math.ceil(standardClipsCount * 0.96);
 
   // 8. Area and Perimeter Calculations
   let actualAreaSqm = (width * length) / 1000000;
