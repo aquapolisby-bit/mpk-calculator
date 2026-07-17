@@ -377,16 +377,14 @@ export function calculateDeck(config: DeckConfig): CalculationResults {
     
     let targetStartLength = baseBoardLength;
     if (netBoardDirectionSpan > baseBoardLength) {
-      const cycle = r % 3;
+      const cycle = r % 2;
       if (cycle === 1) {
-        targetStartLength = Math.max(500, Math.round((baseBoardLength * 0.6) / 100) * 100);
-      } else if (cycle === 2) {
-        targetStartLength = Math.max(500, Math.round((baseBoardLength * 0.3) / 100) * 100);
+        targetStartLength = Math.max(300, Math.round((baseBoardLength * 0.5) / 100) * 100);
       }
     }
     
-    if (targetStartLength < 500) {
-      targetStartLength = 500;
+    if (targetStartLength < 300) {
+      targetStartLength = 300;
     }
 
     segments.forEach((segment) => {
@@ -429,15 +427,16 @@ export function calculateDeck(config: DeckConfig): CalculationResults {
           if (remainingSpace <= baseBoardLength) {
             pieceLength = remainingSpace;
             
-            if (pieceLength < 500 && rowPieces.length > 0) {
+            if (pieceLength < 300 && rowPieces.length > 0) {
               const prevPiece = rowPieces[rowPieces.length - 1];
-              const needed = 500 - pieceLength;
+              const needed = 300 - pieceLength;
               
-              if (prevPiece.length - needed >= 500) {
+              if (prevPiece.length - needed >= 300) {
                 prevPiece.length -= needed;
                 pieceLength += needed;
+                currentX -= needed; // Shift the current start position left to touch the shortened previous piece
               } else {
-                pieceLength = 500;
+                pieceLength = 300;
               }
             }
 
@@ -455,13 +454,13 @@ export function calculateDeck(config: DeckConfig): CalculationResults {
         }
 
         if (pieceLength <= 0) {
-          pieceLength = 500;
+          pieceLength = 300;
         }
 
         if (!isReused && pieceLength < baseBoardLength) {
           totalStandardBoardsUsed++;
           const offcutLen = baseBoardLength - pieceLength;
-          if (offcutLen >= 500) {
+          if (offcutLen >= 300) {
             offcutsPool.push({
               length: offcutLen,
               id: `offcut-${boardCounter}`,

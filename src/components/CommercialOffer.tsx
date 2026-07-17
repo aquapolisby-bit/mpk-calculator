@@ -5,8 +5,8 @@
 
 import React from 'react';
 import { CalculationResults, DeckConfig } from '../types';
-import { BOARD_SPECS, COLORS, ACCESSORY_PRICES } from '../utils';
-import { Printer, Mail, Phone, MapPin, Globe, Check, AlertCircle, X } from 'lucide-react';
+import { BOARD_SPECS, COLORS } from '../utils';
+import { Printer, Mail, Phone, MapPin, Globe, X } from 'lucide-react';
 
 interface CommercialOfferProps {
   config: DeckConfig;
@@ -15,28 +15,11 @@ interface CommercialOfferProps {
 }
 
 export const CommercialOffer: React.FC<CommercialOfferProps> = ({ config, results, onClose }) => {
-  const [formData, setFormData] = React.useState({
-    name: '',
-    phone: '',
-    email: '',
-    agreed: true,
-  });
-  const [submitted, setSubmitted] = React.useState(false);
-
   const spec = BOARD_SPECS[config.boardType];
   const color = COLORS.find((c) => c.id === config.colorId) || COLORS[0];
 
   const handlePrint = () => {
     window.print();
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!formData.name || !formData.phone) {
-      alert('Пожалуйста, заполните обязательные поля: Имя и Телефон.');
-      return;
-    }
-    setSubmitted(true);
   };
 
   const formatCurrency = (val: number) => {
@@ -272,77 +255,6 @@ export const CommercialOffer: React.FC<CommercialOfferProps> = ({ config, result
               *Цены действительны при заказе через сайт мпк.бел
             </div>
           </div>
-        </div>
-
-        {/* LEAD CAPTURE FORM / SUBMIT (hidden in print) */}
-        <div className="print:hidden border-t border-slate-100 pt-6">
-          {!submitted ? (
-            <div className="bg-emerald-50/50 rounded-2xl p-6 border border-emerald-100 space-y-4">
-              <div className="space-y-1">
-                <h3 className="text-sm font-bold text-emerald-950 flex items-center gap-2">
-                  <span className="bg-emerald-500 text-white w-5 h-5 rounded-full flex items-center justify-center text-[10px]">🔥</span>
-                  Получить специальное предложение на этот расчёт!
-                </h3>
-                <p className="text-xs text-emerald-800 leading-relaxed">
-                  Отправьте этот расчёт менеджеру компании ООО «Акваполис». Мы перепроверим схему укладки, подберём оптимальный объём поставки, закрепим за вами персональную <span className="font-bold text-emerald-950">скидку до 7%</span> и согласуем бесплатный выезд замерщика.
-                </p>
-              </div>
-
-              <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-3 gap-4" id="lead-capture-form">
-                <div className="space-y-1.5">
-                  <label className="text-[10px] font-bold text-emerald-900 uppercase tracking-wide block" htmlFor="client-name">
-                    Ваше имя *
-                  </label>
-                  <input
-                    id="client-name"
-                    type="text"
-                    required
-                    placeholder="Например, Иван"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-3 py-2 bg-white border border-emerald-200 rounded-xl text-xs focus:outline-none focus:border-emerald-500"
-                  />
-                </div>
-
-                <div className="space-y-1.5">
-                  <label className="text-[10px] font-bold text-emerald-900 uppercase tracking-wide block" htmlFor="client-phone">
-                    Номер телефона *
-                  </label>
-                  <input
-                    id="client-phone"
-                    type="tel"
-                    required
-                    placeholder="+375 (__) ___-__-__"
-                    value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="w-full px-3 py-2 bg-white border border-emerald-200 rounded-xl text-xs focus:outline-none focus:border-emerald-500"
-                  />
-                </div>
-
-                <div className="flex items-end">
-                  <button
-                    type="submit"
-                    id="submit-calculation-btn"
-                    className="w-full py-2 bg-emerald-600 text-white font-bold rounded-xl text-xs hover:bg-emerald-700 transition-colors shadow-sm cursor-pointer"
-                  >
-                    Отправить расчёт и зафиксировать скидку
-                  </button>
-                </div>
-              </form>
-            </div>
-          ) : (
-            <div className="bg-emerald-500 text-white rounded-2xl p-6 text-center space-y-3 shadow-inner">
-              <div className="w-10 h-10 bg-white text-emerald-600 rounded-full flex items-center justify-center mx-auto shadow-sm">
-                <Check className="w-6 h-6" />
-              </div>
-              <div className="space-y-1">
-                <h4 className="font-extrabold text-sm">Ваша заявка успешно отправлена!</h4>
-                <p className="text-xs text-emerald-100 max-w-md mx-auto">
-                  Спасибо, <span className="font-bold text-white">{formData.name}</span>! Менеджер ООО «Акваполис» свяжется с вами по номеру <span className="font-bold text-white">{formData.phone}</span> в течение 15 минут для согласования деталей заказа и условий предоставления персональной скидки.
-                </p>
-              </div>
-            </div>
-          )}
         </div>
 
         {/* PRINTABLE FOOTER STAMP */}

@@ -21,7 +21,6 @@ export const DeckVisualizer: React.FC<DeckVisualizerProps> = ({ config, results 
   // We want to scale our layout to fit the screen container
   // Keep an aspect ratio based on config.width and config.length
   // Ensure we add some padding around the SVG for dimension labels
-  const padding = 50;
   const svgWidth = 800;
   
   // Calculate height dynamically maintaining the aspect ratio
@@ -33,6 +32,9 @@ export const DeckVisualizer: React.FC<DeckVisualizerProps> = ({ config, results 
   // We'll map the acrossDirectionSpan (perpendicular to boards) to the SVG's cross axis (Y)
   const totalBoardSpan = isAlongLength ? config.length : config.width;
   const totalAcrossSpan = isAlongLength ? config.width : config.length;
+
+  const unitScale = Math.max(1.2, totalBoardSpan / 700);
+  const padding = 75 * unitScale;
 
   const aspect = totalAcrossSpan / totalBoardSpan;
   const svgHeight = Math.max(200, Math.min(600, Math.round(svgWidth * aspect)));
@@ -222,19 +224,20 @@ export const DeckVisualizer: React.FC<DeckVisualizerProps> = ({ config, results 
           <g>
             <line
               x1={padding}
-              y1={padding - 20}
+              y1={padding - 20 * unitScale}
               x2={padding + totalBoardSpan}
-              y2={padding - 20}
+              y2={padding - 20 * unitScale}
               stroke="#64748B"
-              strokeWidth="1"
+              strokeWidth={1.5 * unitScale}
               markerEnd="url(#arrow-end)"
               markerStart="url(#arrow-start)"
             />
             <text
               x={padding + totalBoardSpan / 2}
-              y={padding - 25}
+              y={padding - 27 * unitScale}
               textAnchor="middle"
-              className="text-[12px] font-bold fill-slate-500 font-mono"
+              className="font-bold fill-slate-600 font-mono"
+              fontSize={11 * unitScale}
             >
               {isAlongLength ? `Длина L: ${(config.length / 1000).toFixed(2)} м` : `Ширина W: ${(config.width / 1000).toFixed(2)} м`}
             </text>
@@ -243,24 +246,56 @@ export const DeckVisualizer: React.FC<DeckVisualizerProps> = ({ config, results 
           {/* Width Arrow & Label */}
           <g>
             <line
-              x1={padding - 20}
+              x1={padding - 20 * unitScale}
               y1={padding}
-              x2={padding - 20}
+              x2={padding - 20 * unitScale}
               y2={padding + totalAcrossSpan}
               stroke="#64748B"
-              strokeWidth="1"
+              strokeWidth={1.5 * unitScale}
               markerEnd="url(#arrow-end)"
               markerStart="url(#arrow-start)"
             />
             <text
-              x={padding - 25}
+              x={padding - 27 * unitScale}
               y={padding + totalAcrossSpan / 2}
               textAnchor="middle"
-              transform={`rotate(-90, ${padding - 25}, ${padding + totalAcrossSpan / 2})`}
-              className="text-[12px] font-bold fill-slate-500 font-mono"
+              transform={`rotate(-90, ${padding - 27 * unitScale}, ${padding + totalAcrossSpan / 2})`}
+              className="font-bold fill-slate-600 font-mono"
+              fontSize={11 * unitScale}
             >
               {isAlongLength ? `Ширина W: ${(config.width / 1000).toFixed(2)} м` : `Длина L: ${(config.length / 1000).toFixed(2)} м`}
             </text>
+          </g>
+
+          {/* Side direction labels with letter markers (А, Б, В, Г) */}
+          <g className="select-none">
+            {/* FRONT (BOTTOM) SIDE - А */}
+            <g transform={`translate(${padding + totalBoardSpan / 2}, ${padding + totalAcrossSpan + 45 * unitScale})`}>
+              <circle r={12 * unitScale} fill="#10B981" />
+              <text y={4 * unitScale} textAnchor="middle" fill="#ffffff" className="font-extrabold font-sans" fontSize={12 * unitScale}>А</text>
+              <text y={24 * unitScale} textAnchor="middle" fill="#334155" className="font-bold font-sans" fontSize={9 * unitScale}>Передняя сторона (А)</text>
+            </g>
+
+            {/* LEFT SIDE - Б */}
+            <g transform={`translate(${padding - 45 * unitScale}, ${padding + totalAcrossSpan / 2}) rotate(-90)`}>
+              <circle r={12 * unitScale} fill="#10B981" />
+              <text y={4 * unitScale} textAnchor="middle" fill="#ffffff" className="font-extrabold font-sans" fontSize={12 * unitScale}>Б</text>
+              <text y={24 * unitScale} textAnchor="middle" fill="#334155" className="font-bold font-sans" fontSize={9 * unitScale}>Левая сторона (Б)</text>
+            </g>
+
+            {/* BACK (TOP) SIDE - В */}
+            <g transform={`translate(${padding + totalBoardSpan / 2}, ${padding - 45 * unitScale})`}>
+              <circle r={12 * unitScale} fill="#10B981" />
+              <text y={4 * unitScale} textAnchor="middle" fill="#ffffff" className="font-extrabold font-sans" fontSize={12 * unitScale}>В</text>
+              <text y={-16 * unitScale} textAnchor="middle" fill="#334155" className="font-bold font-sans" fontSize={9 * unitScale}>Задняя сторона (В)</text>
+            </g>
+
+            {/* RIGHT SIDE - Г */}
+            <g transform={`translate(${padding + totalBoardSpan + 45 * unitScale}, ${padding + totalAcrossSpan / 2}) rotate(90)`}>
+              <circle r={12 * unitScale} fill="#10B981" />
+              <text y={4 * unitScale} textAnchor="middle" fill="#ffffff" className="font-extrabold font-sans" fontSize={12 * unitScale}>Г</text>
+              <text y={24 * unitScale} textAnchor="middle" fill="#334155" className="font-bold font-sans" fontSize={9 * unitScale}>Правая сторона (Г)</text>
+            </g>
           </g>
 
           {/* Definitions for Markers */}
@@ -355,7 +390,7 @@ export const DeckVisualizer: React.FC<DeckVisualizerProps> = ({ config, results 
           <span className="font-bold text-emerald-950 block">Оптимальная шахматная укладка:</span>
           <p className="leading-relaxed">
             Наш алгоритм автоматически распределил доски со смещением стыков на каждом ряду (не менее 300 мм), чтобы обеспечить максимальную жесткость и эстетичный внешний вид настила. 
-            Все остатки досок длиннее 500 мм автоматически использованы в последующих рядах для минимизации ваших расходов. 
+            Все остатки досок длиннее 300 мм автоматически использованы в последующих рядах для минимизации ваших расходов. 
             В результате, реальный процент отхода составил всего <span className="font-bold text-emerald-700">{results.actualWastePercentage}%</span>.
           </p>
         </div>

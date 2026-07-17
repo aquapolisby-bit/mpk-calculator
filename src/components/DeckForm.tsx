@@ -163,10 +163,23 @@ export const DeckForm: React.FC<DeckFormProps> = ({ config, onChange }) => {
         {/* Core Dimensions */}
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-2">
-            <label className="text-xs font-medium text-slate-500" htmlFor="width-input">
+            <label className="text-xs font-semibold text-slate-500" htmlFor="width-input">
               Ширина (W), м
             </label>
-            <div className="relative">
+            <div className="relative flex items-center bg-slate-50 border border-slate-200 rounded-xl focus-within:border-emerald-500 focus-within:ring-1 focus-within:ring-emerald-500 transition-all overflow-hidden">
+              <button
+                type="button"
+                id="width-decrement-btn"
+                onClick={() => {
+                  const current = parseFloat(widthMeters) || 0;
+                  const next = Math.max(0.5, Math.round((current - 0.1) * 10) / 10);
+                  handleWidthChange(next.toString());
+                }}
+                className="w-10 h-11 flex items-center justify-center text-slate-500 hover:bg-slate-100 active:bg-slate-200 font-bold text-base cursor-pointer select-none transition-colors border-r border-slate-200"
+                title="Уменьшить"
+              >
+                –
+              </button>
               <input
                 id="width-input"
                 type="number"
@@ -175,18 +188,44 @@ export const DeckForm: React.FC<DeckFormProps> = ({ config, onChange }) => {
                 max="50"
                 value={widthMeters}
                 onChange={(e) => handleWidthChange(e.target.value)}
-                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-emerald-500 text-slate-800 font-medium transition-colors"
+                className="w-full bg-transparent px-2 py-3 text-center focus:outline-none text-slate-800 font-semibold text-sm [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
               />
-              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-400">
+              <span className="absolute right-12 top-1/2 -translate-y-1/2 text-[10px] text-slate-400 pointer-events-none hidden sm:inline font-mono">
                 {(config.width).toLocaleString()} мм
               </span>
+              <button
+                type="button"
+                id="width-increment-btn"
+                onClick={() => {
+                  const current = parseFloat(widthMeters) || 0;
+                  const next = Math.min(50, Math.round((current + 0.1) * 10) / 10);
+                  handleWidthChange(next.toString());
+                }}
+                className="w-10 h-11 flex items-center justify-center text-slate-500 hover:bg-slate-100 active:bg-slate-200 font-bold text-base cursor-pointer select-none transition-colors border-l border-slate-200"
+                title="Увеличить"
+              >
+                +
+              </button>
             </div>
           </div>
           <div className="space-y-2">
-            <label className="text-xs font-medium text-slate-500" htmlFor="length-input">
+            <label className="text-xs font-semibold text-slate-500" htmlFor="length-input">
               Длина (L), м
             </label>
-            <div className="relative">
+            <div className="relative flex items-center bg-slate-50 border border-slate-200 rounded-xl focus-within:border-emerald-500 focus-within:ring-1 focus-within:ring-emerald-500 transition-all overflow-hidden">
+              <button
+                type="button"
+                id="length-decrement-btn"
+                onClick={() => {
+                  const current = parseFloat(lengthMeters) || 0;
+                  const next = Math.max(0.5, Math.round((current - 0.1) * 10) / 10);
+                  handleLengthChange(next.toString());
+                }}
+                className="w-10 h-11 flex items-center justify-center text-slate-500 hover:bg-slate-100 active:bg-slate-200 font-bold text-base cursor-pointer select-none transition-colors border-r border-slate-200"
+                title="Уменьшить"
+              >
+                –
+              </button>
               <input
                 id="length-input"
                 type="number"
@@ -195,11 +234,24 @@ export const DeckForm: React.FC<DeckFormProps> = ({ config, onChange }) => {
                 max="50"
                 value={lengthMeters}
                 onChange={(e) => handleLengthChange(e.target.value)}
-                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-emerald-500 text-slate-800 font-medium transition-colors"
+                className="w-full bg-transparent px-2 py-3 text-center focus:outline-none text-slate-800 font-semibold text-sm [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
               />
-              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-400">
+              <span className="absolute right-12 top-1/2 -translate-y-1/2 text-[10px] text-slate-400 pointer-events-none hidden sm:inline font-mono">
                 {(config.length).toLocaleString()} мм
               </span>
+              <button
+                type="button"
+                id="length-increment-btn"
+                onClick={() => {
+                  const current = parseFloat(lengthMeters) || 0;
+                  const next = Math.min(50, Math.round((current + 0.1) * 10) / 10);
+                  handleLengthChange(next.toString());
+                }}
+                className="w-10 h-11 flex items-center justify-center text-slate-500 hover:bg-slate-100 active:bg-slate-200 font-bold text-base cursor-pointer select-none transition-colors border-l border-slate-200"
+                title="Увеличить"
+              >
+                +
+              </button>
             </div>
           </div>
         </div>
@@ -208,44 +260,102 @@ export const DeckForm: React.FC<DeckFormProps> = ({ config, onChange }) => {
         {(config.shape === DeckShape.L_SHAPE || config.shape === DeckShape.CUTOUT) && (
           <div className="grid grid-cols-2 gap-4 p-4 bg-slate-50 rounded-2xl border border-slate-100 animate-in fade-in slide-in-from-top-2">
             <div className="space-y-2">
-              <label className="text-xs font-medium text-slate-500" htmlFor="cutout-width-input">
+              <label className="text-xs font-semibold text-slate-500" htmlFor="cutout-width-input">
                 Ширина выреза, м
               </label>
-              <input
-                id="cutout-width-input"
-                type="number"
-                step="0.1"
-                min="0.1"
-                max={(config.width / 1000 - 0.5).toFixed(1)}
-                value={config.cutoutWidth ? (config.cutoutWidth / 1000).toString() : '1.5'}
-                onChange={(e) => {
-                  const val = parseFloat(e.target.value);
-                  if (!isNaN(val) && val > 0) {
-                    handleInputChange('cutoutWidth', Math.round(val * 1000));
-                  }
-                }}
-                className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-emerald-500 text-slate-800 text-sm font-medium"
-              />
+              <div className="relative flex items-center bg-white border border-slate-200 rounded-xl focus-within:border-emerald-500 focus-within:ring-1 focus-within:ring-emerald-500 transition-all overflow-hidden">
+                <button
+                  type="button"
+                  id="cutout-width-decrement-btn"
+                  onClick={() => {
+                    const current = config.cutoutWidth ? config.cutoutWidth / 1000 : 1.5;
+                    const next = Math.max(0.1, Math.round((current - 0.1) * 10) / 10);
+                    handleInputChange('cutoutWidth', Math.round(next * 1000));
+                  }}
+                  className="w-8 h-9 flex items-center justify-center text-slate-500 hover:bg-slate-100 active:bg-slate-200 font-bold text-sm cursor-pointer select-none transition-colors border-r border-slate-200"
+                  title="Уменьшить"
+                >
+                  –
+                </button>
+                <input
+                  id="cutout-width-input"
+                  type="number"
+                  step="0.1"
+                  min="0.1"
+                  max={(config.width / 1000 - 0.5).toFixed(1)}
+                  value={config.cutoutWidth ? (config.cutoutWidth / 1000).toString() : '1.5'}
+                  onChange={(e) => {
+                    const val = parseFloat(e.target.value);
+                    if (!isNaN(val) && val > 0) {
+                      handleInputChange('cutoutWidth', Math.round(val * 1000));
+                    }
+                  }}
+                  className="w-full bg-transparent px-2 py-2 text-center focus:outline-none text-slate-800 font-semibold text-xs [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                />
+                <button
+                  type="button"
+                  id="cutout-width-increment-btn"
+                  onClick={() => {
+                    const current = config.cutoutWidth ? config.cutoutWidth / 1000 : 1.5;
+                    const maxVal = parseFloat((config.width / 1000 - 0.5).toFixed(1));
+                    const next = Math.min(maxVal, Math.round((current + 0.1) * 10) / 10);
+                    handleInputChange('cutoutWidth', Math.round(next * 1000));
+                  }}
+                  className="w-8 h-9 flex items-center justify-center text-slate-500 hover:bg-slate-100 active:bg-slate-200 font-bold text-sm cursor-pointer select-none transition-colors border-l border-slate-200"
+                  title="Увеличить"
+                >
+                  +
+                </button>
+              </div>
             </div>
             <div className="space-y-2">
-              <label className="text-xs font-medium text-slate-500" htmlFor="cutout-length-input">
+              <label className="text-xs font-semibold text-slate-500" htmlFor="cutout-length-input">
                 Длина выреза, м
               </label>
-              <input
-                id="cutout-length-input"
-                type="number"
-                step="0.1"
-                min="0.1"
-                max={(config.length / 1000 - 0.5).toFixed(1)}
-                value={config.cutoutLength ? (config.cutoutLength / 1000).toString() : '1.5'}
-                onChange={(e) => {
-                  const val = parseFloat(e.target.value);
-                  if (!isNaN(val) && val > 0) {
-                    handleInputChange('cutoutLength', Math.round(val * 1000));
-                  }
-                }}
-                className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-emerald-500 text-slate-800 text-sm font-medium"
-              />
+              <div className="relative flex items-center bg-white border border-slate-200 rounded-xl focus-within:border-emerald-500 focus-within:ring-1 focus-within:ring-emerald-500 transition-all overflow-hidden">
+                <button
+                  type="button"
+                  id="cutout-length-decrement-btn"
+                  onClick={() => {
+                    const current = config.cutoutLength ? config.cutoutLength / 1000 : 1.5;
+                    const next = Math.max(0.1, Math.round((current - 0.1) * 10) / 10);
+                    handleInputChange('cutoutLength', Math.round(next * 1000));
+                  }}
+                  className="w-8 h-9 flex items-center justify-center text-slate-500 hover:bg-slate-100 active:bg-slate-200 font-bold text-sm cursor-pointer select-none transition-colors border-r border-slate-200"
+                  title="Уменьшить"
+                >
+                  –
+                </button>
+                <input
+                  id="cutout-length-input"
+                  type="number"
+                  step="0.1"
+                  min="0.1"
+                  max={(config.length / 1000 - 0.5).toFixed(1)}
+                  value={config.cutoutLength ? (config.cutoutLength / 1000).toString() : '1.5'}
+                  onChange={(e) => {
+                    const val = parseFloat(e.target.value);
+                    if (!isNaN(val) && val > 0) {
+                      handleInputChange('cutoutLength', Math.round(val * 1000));
+                    }
+                  }}
+                  className="w-full bg-transparent px-2 py-2 text-center focus:outline-none text-slate-800 font-semibold text-xs [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                />
+                <button
+                  type="button"
+                  id="cutout-length-increment-btn"
+                  onClick={() => {
+                    const current = config.cutoutLength ? config.cutoutLength / 1000 : 1.5;
+                    const maxVal = parseFloat((config.length / 1000 - 0.5).toFixed(1));
+                    const next = Math.min(maxVal, Math.round((current + 0.1) * 10) / 10);
+                    handleInputChange('cutoutLength', Math.round(next * 1000));
+                  }}
+                  className="w-8 h-9 flex items-center justify-center text-slate-500 hover:bg-slate-100 active:bg-slate-200 font-bold text-sm cursor-pointer select-none transition-colors border-l border-slate-200"
+                  title="Увеличить"
+                >
+                  +
+                </button>
+              </div>
             </div>
           </div>
         )}
