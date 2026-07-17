@@ -39,6 +39,8 @@ export default function App() {
       console.error('Failed to postMessage close_calculator:', e);
     }
     try {
+      // Использование трюка с переопределением вкладки для её закрытия
+      window.open('', '_self');
       window.close();
     } catch (e) {
       console.error('Failed to call window.close():', e);
