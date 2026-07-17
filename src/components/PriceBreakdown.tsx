@@ -40,7 +40,7 @@ export const PriceBreakdown: React.FC<PriceBreakdownProps> = ({
     <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 space-y-6" id="price-breakdown-container">
       <div>
         <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-2">
-          <ClipboardList className="w-4 h-4 text-emerald-500" />
+          <ClipboardList className="w-4 h-4 text-brand" />
           Спецификация и Стоимость
         </h3>
         <p className="text-xs text-slate-400 mt-1">
@@ -79,11 +79,11 @@ export const PriceBreakdown: React.FC<PriceBreakdownProps> = ({
           </span>
         </div>
 
-        <div className="bg-emerald-50 rounded-xl p-4 border border-emerald-100">
-          <span className="text-[10px] uppercase font-bold tracking-wider text-emerald-700 block mb-1">
+        <div className="bg-brand-light rounded-xl p-4 border border-brand/20">
+          <span className="text-[10px] uppercase font-bold tracking-wider text-brand-dark block mb-1">
             Итоговая стоимость
           </span>
-          <span className="text-xl font-extrabold text-emerald-950 font-mono">
+          <span className="text-xl font-extrabold text-brand-dark font-mono">
             {formatCurrency(results.totalSum)}
           </span>
         </div>
@@ -231,7 +231,7 @@ export const PriceBreakdown: React.FC<PriceBreakdownProps> = ({
           type="button"
           id="send-request-btn"
           onClick={onSendRequest}
-          className="flex-1 px-4 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl text-xs flex items-center justify-center gap-2 shadow-sm shadow-emerald-600/10 transition-all"
+          className="flex-1 px-4 py-3 bg-brand hover:bg-brand-hover text-white font-semibold rounded-xl text-xs flex items-center justify-center gap-2 shadow-sm shadow-brand/10 transition-all"
         >
           Получить скидку и вызвать замерщика
           <ArrowRight className="w-4 h-4" />

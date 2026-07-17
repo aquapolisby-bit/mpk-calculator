@@ -33,7 +33,7 @@ export const CommercialOffer: React.FC<CommercialOfferProps> = ({ config, result
         {/* Close Button & Print Action Bar (hidden in print) */}
         <div className="flex justify-between items-center print:hidden border-b border-slate-100 pb-4">
           <span className="text-sm font-bold text-slate-800 flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+            <span className="w-2.5 h-2.5 rounded-full bg-brand"></span>
             Официальное коммерческое предложение
           </span>
           <div className="flex items-center gap-2">
@@ -41,7 +41,7 @@ export const CommercialOffer: React.FC<CommercialOfferProps> = ({ config, result
               type="button"
               id="print-action-btn"
               onClick={handlePrint}
-              className="px-4 py-2 bg-emerald-600 text-white text-xs font-semibold rounded-lg hover:bg-emerald-700 flex items-center gap-2 transition-all"
+              className="px-4 py-2 bg-brand text-white text-xs font-semibold rounded-lg hover:bg-brand-hover flex items-center gap-2 transition-all"
             >
               <Printer className="w-3.5 h-3.5" />
               Распечатать / Сохранить в PDF
@@ -78,20 +78,20 @@ export const CommercialOffer: React.FC<CommercialOfferProps> = ({ config, result
 
           <div className="text-xs text-slate-500 space-y-2 md:text-right md:justify-self-end">
             <div className="flex items-center md:justify-end gap-2 text-slate-700">
-              <MapPin className="w-3.5 h-3.5 text-emerald-600" />
+              <MapPin className="w-3.5 h-3.5 text-brand" />
               <span>аг. Ждановичи, ул. Цветочная, д.25</span>
             </div>
             <div className="flex items-center md:justify-end gap-2 text-slate-700">
-              <Phone className="w-3.5 h-3.5 text-emerald-600" />
+              <Phone className="w-3.5 h-3.5 text-brand" />
               <span className="font-semibold">+375 (29) 608-55-99, +375 (29) 608-72-29</span>
             </div>
             <div className="flex items-center md:justify-end gap-2 text-slate-700">
-              <Mail className="w-3.5 h-3.5 text-emerald-600" />
+              <Mail className="w-3.5 h-3.5 text-brand" />
               <span>info@мпк.бел</span>
             </div>
             <div className="flex items-center md:justify-end gap-2 text-slate-700">
-              <Globe className="w-3.5 h-3.5 text-emerald-600" />
-              <span className="font-semibold text-emerald-700">https://мпк.бел</span>
+              <Globe className="w-3.5 h-3.5 text-brand" />
+              <span className="font-semibold text-brand-dark">https://мпк.бел</span>
             </div>
             <div className="text-[10px] text-slate-400 pt-1">
               УНП 693157911 • Действительно до: 31 декабря 2026 г.
@@ -129,7 +129,7 @@ export const CommercialOffer: React.FC<CommercialOfferProps> = ({ config, result
 
         {/* SPECIFICATION TABLE */}
         <div className="space-y-3">
-          <h2 className="text-sm font-bold text-slate-900 border-l-2 border-emerald-500 pl-2">
+          <h2 className="text-sm font-bold text-slate-900 border-l-2 border-brand pl-2">
             Спецификация материалов и комплектующих
           </h2>
           
@@ -249,7 +249,7 @@ export const CommercialOffer: React.FC<CommercialOfferProps> = ({ config, result
               Вес груза для доставки: <span className="font-bold text-slate-800">{results.totalWeight.toLocaleString()} кг</span>
             </div>
             <div className="text-lg font-bold text-slate-950">
-              ИТОГО К ОПЛАТЕ: <span className="text-emerald-700 font-extrabold font-mono text-xl">{formatCurrency(results.totalSum)}</span>
+              ИТОГО К ОПЛАТЕ: <span className="text-brand-dark font-extrabold font-mono text-xl">{formatCurrency(results.totalSum)}</span>
             </div>
             <div className="text-[10px] text-slate-400 font-medium">
               *Цены действительны при заказе через сайт мпк.бел

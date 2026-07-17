@@ -5,6 +5,10 @@
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Space Grotesk", sans-serif;
   --font-mono: "JetBrains Mono", monospace;
+  --color-brand: #ca9375;
+  --color-brand-hover: #b98162;
+  --color-brand-light: #fbf5f1;
+  --color-brand-dark: #8c5a3d;
 }
 
 body {

@@ -94,7 +94,7 @@ export const DeckForm: React.FC<DeckFormProps> = ({ config, onChange }) => {
       {/* 1. Геометрия и Размеры */}
       <div className="space-y-6">
         <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-2">
-          <Maximize2 className="w-4 h-4 text-emerald-500" />
+          <Maximize2 className="w-4 h-4 text-brand" />
           1. Геометрия и Размеры террасы
         </h3>
 
@@ -108,7 +108,7 @@ export const DeckForm: React.FC<DeckFormProps> = ({ config, onChange }) => {
               onClick={() => handleInputChange('shape', DeckShape.RECTANGLE)}
               className={`flex flex-col items-center justify-center p-3 rounded-xl border text-center cursor-pointer transition-all ${
                 config.shape === DeckShape.RECTANGLE
-                  ? 'border-emerald-500 bg-emerald-50/50 text-emerald-900 shadow-sm'
+                  ? 'border-brand bg-brand-light text-brand-dark shadow-sm'
                   : 'border-slate-100 bg-slate-50/50 hover:bg-slate-50 text-slate-600'
               }`}
             >
@@ -122,7 +122,7 @@ export const DeckForm: React.FC<DeckFormProps> = ({ config, onChange }) => {
               onClick={() => handleInputChange('shape', DeckShape.L_SHAPE)}
               className={`flex flex-col items-center justify-center p-3 rounded-xl border text-center cursor-pointer transition-all ${
                 config.shape === DeckShape.L_SHAPE
-                  ? 'border-emerald-500 bg-emerald-50/50 text-emerald-900 shadow-sm'
+                  ? 'border-brand bg-brand-light text-brand-dark shadow-sm'
                   : 'border-slate-100 bg-slate-50/50 hover:bg-slate-50 text-slate-600'
               }`}
             >
@@ -136,7 +136,7 @@ export const DeckForm: React.FC<DeckFormProps> = ({ config, onChange }) => {
               onClick={() => handleInputChange('shape', DeckShape.CUTOUT)}
               className={`flex flex-col items-center justify-center p-3 rounded-xl border text-center cursor-pointer transition-all ${
                 config.shape === DeckShape.CUTOUT
-                  ? 'border-emerald-500 bg-emerald-50/50 text-emerald-900 shadow-sm'
+                  ? 'border-brand bg-brand-light text-brand-dark shadow-sm'
                   : 'border-slate-100 bg-slate-50/50 hover:bg-slate-50 text-slate-600'
               }`}
             >
@@ -150,7 +150,7 @@ export const DeckForm: React.FC<DeckFormProps> = ({ config, onChange }) => {
               onClick={() => handleInputChange('shape', DeckShape.CUSTOM)}
               className={`flex flex-col items-center justify-center p-3 rounded-xl border text-center cursor-pointer transition-all ${
                 config.shape === DeckShape.CUSTOM
-                  ? 'border-emerald-500 bg-emerald-50/50 text-emerald-900 shadow-sm'
+                  ? 'border-brand bg-brand-light text-brand-dark shadow-sm'
                   : 'border-slate-100 bg-slate-50/50 hover:bg-slate-50 text-slate-600'
               }`}
             >
@@ -166,7 +166,7 @@ export const DeckForm: React.FC<DeckFormProps> = ({ config, onChange }) => {
             <label className="text-xs font-semibold text-slate-500" htmlFor="width-input">
               Ширина (W), м
             </label>
-            <div className="relative flex items-center bg-slate-50 border border-slate-200 rounded-xl focus-within:border-emerald-500 focus-within:ring-1 focus-within:ring-emerald-500 transition-all overflow-hidden">
+            <div className="relative flex items-center bg-slate-50 border border-slate-200 rounded-xl focus-within:border-brand focus-within:ring-1 focus-within:ring-brand transition-all overflow-hidden">
               <button
                 type="button"
                 id="width-decrement-btn"
@@ -212,7 +212,7 @@ export const DeckForm: React.FC<DeckFormProps> = ({ config, onChange }) => {
             <label className="text-xs font-semibold text-slate-500" htmlFor="length-input">
               Длина (L), м
             </label>
-            <div className="relative flex items-center bg-slate-50 border border-slate-200 rounded-xl focus-within:border-emerald-500 focus-within:ring-1 focus-within:ring-emerald-500 transition-all overflow-hidden">
+            <div className="relative flex items-center bg-slate-50 border border-slate-200 rounded-xl focus-within:border-brand focus-within:ring-1 focus-within:ring-brand transition-all overflow-hidden">
               <button
                 type="button"
                 id="length-decrement-btn"
@@ -263,7 +263,7 @@ export const DeckForm: React.FC<DeckFormProps> = ({ config, onChange }) => {
               <label className="text-xs font-semibold text-slate-500" htmlFor="cutout-width-input">
                 Ширина выреза, м
               </label>
-              <div className="relative flex items-center bg-white border border-slate-200 rounded-xl focus-within:border-emerald-500 focus-within:ring-1 focus-within:ring-emerald-500 transition-all overflow-hidden">
+              <div className="relative flex items-center bg-white border border-slate-200 rounded-xl focus-within:border-brand focus-within:ring-1 focus-within:ring-brand transition-all overflow-hidden">
                 <button
                   type="button"
                   id="cutout-width-decrement-btn"
@@ -312,7 +312,7 @@ export const DeckForm: React.FC<DeckFormProps> = ({ config, onChange }) => {
               <label className="text-xs font-semibold text-slate-500" htmlFor="cutout-length-input">
                 Длина выреза, м
               </label>
-              <div className="relative flex items-center bg-white border border-slate-200 rounded-xl focus-within:border-emerald-500 focus-within:ring-1 focus-within:ring-emerald-500 transition-all overflow-hidden">
+              <div className="relative flex items-center bg-white border border-slate-200 rounded-xl focus-within:border-brand focus-within:ring-1 focus-within:ring-brand transition-all overflow-hidden">
                 <button
                   type="button"
                   id="cutout-length-decrement-btn"
@@ -366,7 +366,7 @@ export const DeckForm: React.FC<DeckFormProps> = ({ config, onChange }) => {
             <div className="flex items-center justify-between">
               <div>
                 <span className="text-xs font-bold text-slate-700 block flex items-center gap-1">
-                  <Grid className="w-3.5 h-3.5 text-emerald-600" />
+                  <Grid className="w-3.5 h-3.5 text-brand" />
                   Конструктор формы террасы
                 </span>
                 <span className="text-[10px] text-slate-400">
@@ -414,7 +414,7 @@ export const DeckForm: React.FC<DeckFormProps> = ({ config, onChange }) => {
                 onClick={() => setDrawTool('paint')}
                 className={`px-2.5 py-1 rounded-lg text-[10px] font-bold flex items-center gap-1 cursor-pointer transition-all ${
                   drawTool === 'paint'
-                    ? 'bg-emerald-600 text-white shadow-sm'
+                    ? 'bg-brand text-white shadow-sm'
                     : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-100'
                 }`}
               >
@@ -452,7 +452,7 @@ export const DeckForm: React.FC<DeckFormProps> = ({ config, onChange }) => {
                 {config.customGrid.map((row, rIdx) => 
                   row.map((active, cIdx) => (
                     <button
-                      key={`cell-${rIdx}-${cIdx}`}
+                       key={`cell-${rIdx}-${cIdx}`}
                       type="button"
                       onMouseDown={(e) => {
                         e.preventDefault();
@@ -475,7 +475,7 @@ export const DeckForm: React.FC<DeckFormProps> = ({ config, onChange }) => {
                       }}
                       className={`aspect-square rounded border transition-all cursor-pointer ${
                         active 
-                          ? 'bg-emerald-500 border-emerald-600 shadow-sm' 
+                          ? 'bg-brand border-brand-dark shadow-sm' 
                           : 'bg-slate-100 border-slate-200 hover:bg-slate-200'
                       }`}
                       title={`${rIdx + 1} ряд, ${cIdx + 1} колонка`}
@@ -485,8 +485,8 @@ export const DeckForm: React.FC<DeckFormProps> = ({ config, onChange }) => {
               </div>
             </div>
 
-            <div className="bg-emerald-50/50 rounded-xl p-3 border border-emerald-100 text-[10px] text-slate-500 leading-relaxed">
-              <span className="font-bold text-emerald-800 block mb-0.5">💡 Подсказка:</span>
+            <div className="bg-brand-light rounded-xl p-3 border border-brand/20 text-[10px] text-slate-500 leading-relaxed">
+              <span className="font-bold text-brand-dark block mb-0.5">💡 Подсказка:</span>
               Зажмите кнопку мыши (или коснитесь пальцем) и ведите по сетке, чтобы быстро рисовать или удалять участки. Удаленные ячейки (серые) — это незаполненные зоны, проёмы или «окна» в террасе. Расчет материалов моментально обновится!
             </div>
           </div>
@@ -496,7 +496,7 @@ export const DeckForm: React.FC<DeckFormProps> = ({ config, onChange }) => {
       {/* 2. Направление и Шаг лаг */}
       <div className="space-y-4">
         <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-2">
-          <Compass className="w-4 h-4 text-emerald-500" />
+          <Compass className="w-4 h-4 text-brand" />
           2. Направление укладки досок
         </h3>
         <div className="grid grid-cols-2 gap-3">
@@ -506,14 +506,14 @@ export const DeckForm: React.FC<DeckFormProps> = ({ config, onChange }) => {
             onClick={() => handleInputChange('direction', LayoutDirection.ALONG_LENGTH)}
             className={`flex flex-col items-center justify-center p-4 rounded-xl border text-center transition-all ${
               config.direction === LayoutDirection.ALONG_LENGTH
-                ? 'border-emerald-500 bg-emerald-50/50 text-emerald-900 shadow-sm'
+                ? 'border-brand bg-brand-light text-brand-dark shadow-sm'
                 : 'border-slate-100 bg-slate-50/50 hover:bg-slate-50 text-slate-600'
             }`}
           >
             <div className="flex flex-col gap-0.5 items-center mb-2">
-              <div className="w-8 h-1.5 bg-emerald-500 rounded-sm mb-1"></div>
-              <div className="w-8 h-1.5 bg-emerald-500 rounded-sm mb-1"></div>
-              <div className="w-8 h-1.5 bg-emerald-500 rounded-sm"></div>
+              <div className="w-8 h-1.5 bg-brand rounded-sm mb-1"></div>
+              <div className="w-8 h-1.5 bg-brand rounded-sm mb-1"></div>
+              <div className="w-8 h-1.5 bg-brand rounded-sm"></div>
             </div>
             <span className="text-xs font-semibold">Вдоль длины (L)</span>
             <span className="text-[10px] text-slate-400 mt-1">Лаги поперек</span>
@@ -525,14 +525,14 @@ export const DeckForm: React.FC<DeckFormProps> = ({ config, onChange }) => {
             onClick={() => handleInputChange('direction', LayoutDirection.ALONG_WIDTH)}
             className={`flex flex-col items-center justify-center p-4 rounded-xl border text-center transition-all ${
               config.direction === LayoutDirection.ALONG_WIDTH
-                ? 'border-emerald-500 bg-emerald-50/50 text-emerald-900 shadow-sm'
+                ? 'border-brand bg-brand-light text-brand-dark shadow-sm'
                 : 'border-slate-100 bg-slate-50/50 hover:bg-slate-50 text-slate-600'
             }`}
           >
             <div className="flex items-center gap-0.5 mb-2">
-              <div className="w-1.5 h-8 bg-emerald-500 rounded-sm mr-1"></div>
-              <div className="w-1.5 h-8 bg-emerald-500 rounded-sm mr-1"></div>
-              <div className="w-1.5 h-8 bg-emerald-500 rounded-sm"></div>
+              <div className="w-1.5 h-8 bg-brand rounded-sm mr-1"></div>
+              <div className="w-1.5 h-8 bg-brand rounded-sm mr-1"></div>
+              <div className="w-1.5 h-8 bg-brand rounded-sm"></div>
             </div>
             <span className="text-xs font-semibold">Вдоль ширины (W)</span>
             <span className="text-[10px] text-slate-400 mt-1">Лаги поперек</span>
@@ -543,7 +543,7 @@ export const DeckForm: React.FC<DeckFormProps> = ({ config, onChange }) => {
       {/* 3. Выбор террасной доски */}
       <div className="space-y-4">
         <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-2">
-          <Layers className="w-4 h-4 text-emerald-500" />
+          <Layers className="w-4 h-4 text-brand" />
           3. Профиль террасной доски
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -555,11 +555,11 @@ export const DeckForm: React.FC<DeckFormProps> = ({ config, onChange }) => {
               onClick={() => handleInputChange('boardType', spec.type)}
               className={`flex flex-col items-start p-4 rounded-xl border text-left transition-all ${
                 config.boardType === spec.type
-                  ? 'border-emerald-500 bg-emerald-50/30 text-slate-800 shadow-sm'
+                  ? 'border-brand bg-brand-light text-slate-800 shadow-sm'
                   : 'border-slate-100 bg-slate-50/50 hover:bg-slate-50 text-slate-600'
               }`}
             >
-              <span className={`text-xs font-bold ${config.boardType === spec.type ? 'text-emerald-700' : 'text-slate-800'}`}>
+              <span className={`text-xs font-bold ${config.boardType === spec.type ? 'text-brand-dark' : 'text-slate-800'}`}>
                 {spec.name}
               </span>
               <div className="flex items-center gap-3 mt-2 text-[11px] text-slate-500">
@@ -578,7 +578,7 @@ export const DeckForm: React.FC<DeckFormProps> = ({ config, onChange }) => {
       {/* 4. Текстура и Обработка */}
       <div className="space-y-4">
         <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-2">
-          <Sparkles className="w-4 h-4 text-emerald-500" />
+          <Sparkles className="w-4 h-4 text-brand" />
           4. Обработка поверхности
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -588,7 +588,7 @@ export const DeckForm: React.FC<DeckFormProps> = ({ config, onChange }) => {
             onClick={() => handleInputChange('boardTexture', BoardTexture.VELVET)}
             className={`flex flex-col items-center justify-center p-3 rounded-xl border text-center transition-all ${
               config.boardTexture === BoardTexture.VELVET
-                ? 'border-emerald-500 bg-emerald-50/50 text-emerald-900 shadow-sm'
+                ? 'border-brand bg-brand-light text-brand-dark shadow-sm'
                 : 'border-slate-100 bg-slate-50/50 hover:bg-slate-50 text-slate-600'
             }`}
           >
@@ -602,7 +602,7 @@ export const DeckForm: React.FC<DeckFormProps> = ({ config, onChange }) => {
             onClick={() => handleInputChange('boardTexture', BoardTexture.GRINDING_EMBOSSING)}
             className={`flex flex-col items-center justify-center p-3 rounded-xl border text-center transition-all ${
               config.boardTexture === BoardTexture.GRINDING_EMBOSSING
-                ? 'border-emerald-500 bg-emerald-50/50 text-emerald-900 shadow-sm'
+                ? 'border-brand bg-brand-light text-brand-dark shadow-sm'
                 : 'border-slate-100 bg-slate-50/50 hover:bg-slate-50 text-slate-600'
             }`}
           >
@@ -616,7 +616,7 @@ export const DeckForm: React.FC<DeckFormProps> = ({ config, onChange }) => {
             onClick={() => handleInputChange('boardTexture', BoardTexture.EMBOSSING_3D)}
             className={`flex flex-col items-center justify-center p-3 rounded-xl border text-center transition-all ${
               config.boardTexture === BoardTexture.EMBOSSING_3D
-                ? 'border-emerald-500 bg-emerald-50/50 text-emerald-900 shadow-sm'
+                ? 'border-brand bg-brand-light text-brand-dark shadow-sm'
                 : 'border-slate-100 bg-slate-50/50 hover:bg-slate-50 text-slate-600'
             }`}
           >
@@ -629,7 +629,7 @@ export const DeckForm: React.FC<DeckFormProps> = ({ config, onChange }) => {
       {/* 5. Выбор Цвета */}
       <div className="space-y-4">
         <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-2">
-          <span className="w-4 h-4 rounded-full border border-slate-300 flex items-center justify-center text-[9px] text-emerald-600 font-bold bg-emerald-50">C</span>
+          <span className="w-4 h-4 rounded-full border border-slate-300 flex items-center justify-center text-[9px] text-brand-dark font-bold bg-brand-light">C</span>
           5. Цвет доски
         </h3>
         
@@ -645,7 +645,7 @@ export const DeckForm: React.FC<DeckFormProps> = ({ config, onChange }) => {
                 onClick={() => handleInputChange('colorId', color.id)}
                 className={`flex items-center gap-2 px-3 py-2 rounded-xl border text-xs transition-all ${
                   config.colorId === color.id
-                    ? 'border-emerald-500 bg-emerald-50/30 text-emerald-950 font-medium'
+                    ? 'border-brand bg-brand-light text-brand-dark font-medium'
                     : 'border-slate-100 bg-slate-50/30 hover:bg-slate-50 text-slate-600'
                 }`}
               >
@@ -671,7 +671,7 @@ export const DeckForm: React.FC<DeckFormProps> = ({ config, onChange }) => {
                 onClick={() => handleInputChange('colorId', color.id)}
                 className={`flex items-center gap-2 px-3 py-2 rounded-xl border text-xs transition-all ${
                   config.colorId === color.id
-                    ? 'border-emerald-500 bg-emerald-50/30 text-emerald-950 font-medium'
+                    ? 'border-brand bg-brand-light text-brand-dark font-medium'
                     : 'border-slate-100 bg-slate-50/30 hover:bg-slate-50 text-slate-600'
                 }`}
               >
@@ -689,7 +689,7 @@ export const DeckForm: React.FC<DeckFormProps> = ({ config, onChange }) => {
       {/* 6. Длина Доски и Запас */}
       <div className="space-y-4 pt-2 border-t border-slate-50">
         <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-2">
-          <Settings className="w-4 h-4 text-emerald-500" />
+          <Settings className="w-4 h-4 text-brand" />
           6. Параметры поставки и Запас
         </h3>
 
@@ -704,7 +704,7 @@ export const DeckForm: React.FC<DeckFormProps> = ({ config, onChange }) => {
                 onClick={() => handleInputChange('boardLengthOption', 'stock')}
                 className={`px-3 py-2.5 rounded-xl border text-xs font-medium text-center transition-all ${
                   config.boardLengthOption === 'stock'
-                    ? 'border-emerald-500 bg-emerald-50/40 text-emerald-950'
+                    ? 'border-brand bg-brand-light text-brand-dark'
                     : 'border-slate-100 bg-slate-50/50 text-slate-600'
                 }`}
               >
@@ -716,7 +716,7 @@ export const DeckForm: React.FC<DeckFormProps> = ({ config, onChange }) => {
                 onClick={() => handleInputChange('boardLengthOption', 'custom')}
                 className={`px-3 py-2.5 rounded-xl border text-xs font-medium text-center transition-all ${
                   config.boardLengthOption === 'custom'
-                    ? 'border-emerald-500 bg-emerald-50/40 text-emerald-950'
+                    ? 'border-brand bg-brand-light text-brand-dark'
                     : 'border-slate-100 bg-slate-50/50 text-slate-600'
                 }`}
               >
@@ -728,7 +728,7 @@ export const DeckForm: React.FC<DeckFormProps> = ({ config, onChange }) => {
               <div className="space-y-1.5 pt-2">
                 <div className="flex justify-between text-xs font-medium text-slate-500">
                   <span>Длина доски:</span>
-                  <span className="text-emerald-600 font-bold">{(config.customBoardLength / 1000).toFixed(1)} м</span>
+                  <span className="text-brand font-bold">{(config.customBoardLength / 1000).toFixed(1)} м</span>
                 </div>
                 <input
                   id="custom-board-length-slider"
@@ -738,7 +738,7 @@ export const DeckForm: React.FC<DeckFormProps> = ({ config, onChange }) => {
                   step="100"
                   value={config.customBoardLength}
                   onChange={(e) => handleInputChange('customBoardLength', parseInt(e.target.value))}
-                  className="w-full accent-emerald-500 bg-slate-100 h-1 rounded-lg cursor-pointer"
+                  className="w-full accent-brand bg-slate-100 h-1 rounded-lg cursor-pointer"
                 />
                 <span className="text-[10px] text-slate-400 block">Шаг нарезки составляет 100 мм.</span>
               </div>
@@ -749,7 +749,7 @@ export const DeckForm: React.FC<DeckFormProps> = ({ config, onChange }) => {
           <div className="space-y-3">
             <div className="flex justify-between text-xs font-semibold text-slate-600">
               <span>Запас материала</span>
-              <span className="text-emerald-600 font-bold">{config.wastageMargin}%</span>
+              <span className="text-brand font-bold">{config.wastageMargin}%</span>
             </div>
             <div className="pt-2">
               <input
@@ -760,7 +760,7 @@ export const DeckForm: React.FC<DeckFormProps> = ({ config, onChange }) => {
                 step="5"
                 value={config.wastageMargin}
                 onChange={(e) => handleInputChange('wastageMargin', parseInt(e.target.value))}
-                className="w-full accent-emerald-500 bg-slate-100 h-1 rounded-lg cursor-pointer"
+                className="w-full accent-brand bg-slate-100 h-1 rounded-lg cursor-pointer"
               />
               <div className="flex justify-between text-[9px] text-slate-400 mt-1">
                 <span>0% (без запаса)</span>
@@ -781,7 +781,7 @@ export const DeckForm: React.FC<DeckFormProps> = ({ config, onChange }) => {
                 type="checkbox"
                 checked={config.includeCorners}
                 onChange={(e) => handleInputChange('includeCorners', e.target.checked)}
-                className="w-4 h-4 text-emerald-500 border-slate-200 rounded focus:ring-emerald-400 accent-emerald-500"
+                className="w-4 h-4 text-brand border-slate-200 rounded focus:ring-brand/50 accent-brand"
               />
               <div className="flex flex-col">
                 <span className="text-xs font-semibold text-slate-800">Декоративный уголок (40×60)</span>
@@ -795,7 +795,7 @@ export const DeckForm: React.FC<DeckFormProps> = ({ config, onChange }) => {
                 type="checkbox"
                 checked={config.includeInstallation}
                 onChange={(e) => handleInputChange('includeInstallation', e.target.checked)}
-                className="w-4 h-4 text-emerald-500 border-slate-200 rounded focus:ring-emerald-400 accent-emerald-500"
+                className="w-4 h-4 text-brand border-slate-200 rounded focus:ring-brand/50 accent-brand"
               />
               <div className="flex flex-col">
                 <span className="text-xs font-semibold text-slate-800">Монтажные работы</span>
@@ -808,7 +808,7 @@ export const DeckForm: React.FC<DeckFormProps> = ({ config, onChange }) => {
 
       {/* Tech Specifications Badge */}
       <div className="bg-slate-50/50 rounded-xl p-4 border border-slate-100 flex items-start gap-3">
-        <HelpCircle className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
+        <HelpCircle className="w-5 h-5 text-brand flex-shrink-0 mt-0.5" />
         <div className="space-y-1 text-xs text-slate-500">
           <span className="font-semibold text-slate-700 block">Параметры укладки по ТЗ:</span>
           <ul className="list-disc pl-4 space-y-1 text-[11px]">

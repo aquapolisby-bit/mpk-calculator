@@ -51,7 +51,7 @@ export const DeckVisualizer: React.FC<DeckVisualizerProps> = ({ config, results 
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-2">
-            <Layers className="w-4 h-4 text-emerald-500" />
+            <Layers className="w-4 h-4 text-brand" />
             Схема раскладки террасы
           </h3>
           <p className="text-xs text-slate-400 mt-1">
@@ -59,7 +59,7 @@ export const DeckVisualizer: React.FC<DeckVisualizerProps> = ({ config, results 
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-[10px] bg-emerald-50 text-emerald-700 font-semibold px-2 py-1 rounded-md border border-emerald-100">
+          <span className="text-[10px] bg-brand-light text-brand-dark font-semibold px-2 py-1 rounded-md border border-brand/20">
             Зазор от стен: {results.wallGap} мм
           </span>
           <span className="text-[10px] bg-blue-50 text-blue-700 font-semibold px-2 py-1 rounded-md border border-blue-100">
@@ -313,7 +313,7 @@ export const DeckVisualizer: React.FC<DeckVisualizerProps> = ({ config, results 
         {selectedPiece && (
           <div className="absolute bottom-4 left-4 right-4 sm:left-auto sm:right-4 sm:w-72 bg-slate-900/95 text-white backdrop-blur-sm p-4 rounded-xl shadow-lg border border-slate-800 text-xs space-y-2 animate-in fade-in slide-in-from-bottom-2">
             <div className="flex justify-between items-center border-b border-slate-800 pb-2">
-              <span className="font-bold text-emerald-400">Параметры доски</span>
+              <span className="font-bold text-brand">Параметры доски</span>
               <button
                 type="button"
                 className="text-slate-400 hover:text-white font-medium"
@@ -328,11 +328,11 @@ export const DeckVisualizer: React.FC<DeckVisualizerProps> = ({ config, results 
               <span>Координата X:</span>
               <span className="font-semibold text-white">{selectedPiece.startX.toLocaleString()} мм</span>
               <span>Длина отрезка:</span>
-              <span className="font-bold text-emerald-300 font-mono">{(selectedPiece.length / 1000).toFixed(3)} м ({selectedPiece.length} мм)</span>
+              <span className="font-bold text-brand font-mono">{(selectedPiece.length / 1000).toFixed(3)} м ({selectedPiece.length} мм)</span>
               <span>Тип детали:</span>
               <span>
                 {selectedPiece.length >= (config.boardLengthOption === 'stock' ? 3000 : config.customBoardLength) ? (
-                  <span className="bg-emerald-500/20 text-emerald-400 px-1.5 py-0.5 rounded font-semibold text-[10px]">
+                  <span className="bg-brand/20 text-brand px-1.5 py-0.5 rounded font-semibold text-[10px]">
                     Целая доска
                   </span>
                 ) : (
@@ -373,7 +373,7 @@ export const DeckVisualizer: React.FC<DeckVisualizerProps> = ({ config, results 
         </div>
 
         <div className="flex items-center gap-2">
-          <div className="w-4 h-4 bg-emerald-50 rounded border border-emerald-300 flex items-center justify-center text-[8px] text-emerald-600 font-bold">
+          <div className="w-4 h-4 bg-brand-light rounded border border-brand/30 flex items-center justify-center text-[8px] text-brand font-bold">
             10%
           </div>
           <div>
@@ -384,14 +384,14 @@ export const DeckVisualizer: React.FC<DeckVisualizerProps> = ({ config, results 
       </div>
 
       {/* Dynamic calculation fun fact */}
-      <div className="bg-emerald-50/40 border border-emerald-100/60 rounded-xl p-4 flex items-start gap-3">
-        <Info className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
+      <div className="bg-brand-light border border-brand/20 rounded-xl p-4 flex items-start gap-3">
+        <Info className="w-5 h-5 text-brand flex-shrink-0 mt-0.5" />
         <div className="space-y-1 text-xs text-slate-600">
-          <span className="font-bold text-emerald-950 block">Оптимальная шахматная укладка:</span>
+          <span className="font-bold text-brand-dark block">Оптимальная шахматная укладка:</span>
           <p className="leading-relaxed">
             Наш алгоритм автоматически распределил доски со смещением стыков на каждом ряду (не менее 300 мм), чтобы обеспечить максимальную жесткость и эстетичный внешний вид настила. 
             Все остатки досок длиннее 300 мм автоматически использованы в последующих рядах для минимизации ваших расходов. 
-            В результате, реальный процент отхода составил всего <span className="font-bold text-emerald-700">{results.actualWastePercentage}%</span>.
+            В результате, реальный процент отхода составил всего <span className="font-bold text-brand-dark">{results.actualWastePercentage}%</span>.
           </p>
         </div>
       </div>

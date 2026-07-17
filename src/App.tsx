@@ -10,7 +10,7 @@ import { DeckForm } from './components/DeckForm';
 import { DeckVisualizer } from './components/DeckVisualizer';
 import { PriceBreakdown } from './components/PriceBreakdown';
 import { CommercialOffer } from './components/CommercialOffer';
-import { Phone, CheckCircle, Flame, ShieldCheck, HeartHandshake } from 'lucide-react';
+import { Phone, CheckCircle, Flame, ShieldCheck, HeartHandshake, X } from 'lucide-react';
 
 export default function App() {
   const [config, setConfig] = React.useState<DeckConfig>({
@@ -30,6 +30,22 @@ export default function App() {
   });
 
   const [showOffer, setShowOffer] = React.useState(false);
+
+  // Close calculator logic (try iframe postMessage, try window.close, and fallback to redirect)
+  const handleClose = () => {
+    try {
+      window.parent.postMessage({ action: 'close_calculator' }, '*');
+    } catch (e) {
+      console.error('Failed to postMessage close_calculator:', e);
+    }
+    try {
+      window.close();
+    } catch (e) {
+      console.error('Failed to call window.close():', e);
+    }
+    // Redirect back to official website as fallback/direct close action
+    window.location.href = 'https://мпк.бел';
+  };
 
   // Sync custom drawing grid with selected shape and dimensions
   React.useEffect(() => {
@@ -66,12 +82,12 @@ export default function App() {
   }, [config]);
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col font-sans selection:bg-emerald-500 selection:text-white">
+    <div className="min-h-screen bg-slate-50 flex flex-col font-sans selection:bg-brand selection:text-white">
       {/* 1. Header (мпк.бел Brand representation) */}
       <header className="bg-slate-900 text-white border-b border-slate-800 sticky top-0 z-40 shadow-sm print:hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="bg-emerald-600 text-white font-extrabold text-sm sm:text-base px-3 py-1.5 rounded-xl tracking-wider shadow-sm shadow-emerald-600/20">
+            <div className="bg-brand text-white font-extrabold text-sm sm:text-base px-3 py-1.5 rounded-xl tracking-wider shadow-sm shadow-brand/20">
               МПК
             </div>
             <div>
@@ -82,7 +98,7 @@ export default function App() {
 
           <div className="flex flex-wrap items-center gap-3 text-xs text-slate-300">
             <div className="hidden lg:flex items-center gap-2">
-              <ShieldCheck className="w-4 h-4 text-emerald-500" />
+              <ShieldCheck className="w-4 h-4 text-brand" />
               <span>УНП 693157911</span>
             </div>
             
@@ -90,7 +106,7 @@ export default function App() {
               href="tel:+375296085599"
               className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-white font-bold px-3 py-2 rounded-xl border border-slate-700/80 transition-all text-[11px]"
             >
-              <Phone className="w-3.5 h-3.5 text-emerald-500" />
+              <Phone className="w-3.5 h-3.5 text-brand" />
               <span>+375 (29) 608-55-99</span>
             </a>
 
@@ -98,9 +114,19 @@ export default function App() {
               href="tel:+375296087229"
               className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-white font-bold px-3 py-2 rounded-xl border border-slate-700/80 transition-all text-[11px]"
             >
-              <Phone className="w-3.5 h-3.5 text-emerald-500" />
+              <Phone className="w-3.5 h-3.5 text-brand" />
               <span>+375 (29) 608-72-29</span>
             </a>
+
+            <button
+              onClick={handleClose}
+              id="close-calculator-btn"
+              className="flex items-center gap-1.5 bg-red-600 hover:bg-red-700 text-white font-bold px-3 py-2 rounded-xl border border-red-500/10 shadow-sm shadow-red-600/10 transition-all text-[11px] cursor-pointer ml-1 sm:ml-2"
+              title="Закрыть калькулятор"
+            >
+              <X className="w-3.5 h-3.5" />
+              <span>Закрыть</span>
+            </button>
           </div>
         </div>
       </header>
@@ -108,7 +134,7 @@ export default function App() {
       {/* 2. Hero banner / Title */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-8">
         <div className="space-y-2 text-center max-w-2xl mx-auto print:hidden">
-          <span className="text-[11px] uppercase font-bold tracking-widest text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-100">
+          <span className="text-[11px] uppercase font-bold tracking-widest text-brand-dark bg-brand-light px-2.5 py-1 rounded-full border border-brand/20">
             Интерактивный калькулятор МПК
           </span>
           <h2 className="text-xl sm:text-3xl font-extrabold text-slate-900 tracking-tight font-display">
@@ -141,7 +167,7 @@ export default function App() {
         {/* Features badges */}
         <section className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-6 border-t border-slate-100 print:hidden">
           <div className="bg-white rounded-xl p-4 border border-slate-100 flex gap-3 items-start">
-            <CheckCircle className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
+            <CheckCircle className="w-5 h-5 text-brand flex-shrink-0 mt-0.5" />
             <div className="space-y-0.5 text-xs">
               <span className="font-bold text-slate-800 block">Российское производство</span>
               <span className="text-slate-500">Высококачественный МПК напрямую с завода РФ.</span>
@@ -149,7 +175,7 @@ export default function App() {
           </div>
 
           <div className="bg-white rounded-xl p-4 border border-slate-100 flex gap-3 items-start">
-            <Flame className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
+            <Flame className="w-5 h-5 text-brand flex-shrink-0 mt-0.5" />
             <div className="space-y-0.5 text-xs">
               <span className="font-bold text-slate-800 block">Экологичные материалы</span>
               <span className="text-slate-500">Стойкость к ультрафиолету, влаге и перепадам температур.</span>
@@ -157,7 +183,7 @@ export default function App() {
           </div>
 
           <div className="bg-white rounded-xl p-4 border border-slate-100 flex gap-3 items-start">
-            <HeartHandshake className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
+            <HeartHandshake className="w-5 h-5 text-brand flex-shrink-0 mt-0.5" />
             <div className="space-y-0.5 text-xs">
               <span className="font-bold text-slate-800 block">Помощь и консультация</span>
               <span className="text-slate-500">Бесплатный расчет от инженеров по вашим чертежам.</span>
@@ -179,8 +205,8 @@ export default function App() {
             <div>
               <span className="text-slate-500 block text-[10px] uppercase font-bold tracking-wider">Приём звонков</span>
               <div className="flex flex-col gap-0.5">
-                <a href="tel:+375296085599" className="text-white hover:text-emerald-400 font-bold text-sm transition-colors">+375 (29) 608-55-99</a>
-                <a href="tel:+375296087229" className="text-white hover:text-emerald-400 font-bold text-sm transition-colors">+375 (29) 608-72-29</a>
+                <a href="tel:+375296085599" className="text-white hover:text-brand font-bold text-sm transition-colors">+375 (29) 608-55-99</a>
+                <a href="tel:+375296087229" className="text-white hover:text-brand font-bold text-sm transition-colors">+375 (29) 608-72-29</a>
               </div>
             </div>
             <div>
