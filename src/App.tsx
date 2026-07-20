@@ -165,7 +165,6 @@ export default function App() {
               config={config}
               results={results}
               onPrint={() => setShowOffer(true)}
-              onSendRequest={() => setShowOffer(true)}
             />
           </section>
         </div>

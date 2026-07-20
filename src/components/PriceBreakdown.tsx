@@ -20,14 +20,12 @@ interface PriceBreakdownProps {
   config: DeckConfig;
   results: CalculationResults;
   onPrint: () => void;
-  onSendRequest: () => void;
 }
 
 export const PriceBreakdown: React.FC<PriceBreakdownProps> = ({
   config,
   results,
   onPrint,
-  onSendRequest,
 }) => {
   const spec = BOARD_SPECS[config.boardType];
   const color = COLORS.find((c) => c.id === config.colorId) || COLORS[0];
@@ -216,25 +214,15 @@ export const PriceBreakdown: React.FC<PriceBreakdownProps> = ({
       </div>
 
       {/* Buttons */}
-      <div className="flex flex-col sm:flex-row gap-3 pt-2">
+      <div className="pt-2">
         <button
           type="button"
           id="print-offer-btn"
           onClick={onPrint}
-          className="flex-1 px-4 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl text-xs flex items-center justify-center gap-2 transition-all"
+          className="w-full px-5 py-4 bg-slate-900 text-white font-bold rounded-xl text-sm flex items-center justify-center gap-2.5 transition-all duration-300 hover:bg-brand cursor-pointer shadow-sm shadow-slate-900/10 hover:shadow-md hover:shadow-brand/20 hover:scale-[1.01]"
         >
-          <FileText className="w-4 h-4 text-slate-500" />
+          <FileText className="w-5 h-5 text-slate-400" />
           Показать КП для печати
-        </button>
-
-        <button
-          type="button"
-          id="send-request-btn"
-          onClick={onSendRequest}
-          className="flex-1 px-4 py-3 bg-brand hover:bg-brand-hover text-white font-semibold rounded-xl text-xs flex items-center justify-center gap-2 shadow-sm shadow-brand/10 transition-all"
-        >
-          Получить скидку и вызвать замерщика
-          <ArrowRight className="w-4 h-4" />
         </button>
       </div>
     </div>
